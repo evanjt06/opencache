@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"opencache/cache"
+	"os"
 	"sync"
 	"testing"
 	"time"
 )
 
 func TestSetAndGet(t *testing.T) {
-	c := cache.NewOpenCache(2)
+	c := cache.NewOpenCache(2, false, "")
 
 	c.Set("a", 1, nil)
 	c.Set("b", 2, nil)
@@ -26,7 +27,7 @@ func TestSetAndGet(t *testing.T) {
 }
 
 func TestLRUEviction(t *testing.T) {
-	c := cache.NewOpenCache(2)
+	c := cache.NewOpenCache(2, false, "")
 
 	c.Set("a", 1, nil)
 	c.Set("b", 2, nil)
@@ -48,7 +49,7 @@ func TestLRUEviction(t *testing.T) {
 }
 
 func TestTTLExpiration(t *testing.T) {
-	c := cache.NewOpenCache(2)
+	c := cache.NewOpenCache(2, false, "")
 
 	ttl := 1 * time.Second
 	c.Set("x", "expiring", &ttl)
@@ -63,7 +64,7 @@ func TestTTLExpiration(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	c := cache.NewOpenCache(1)
+	c := cache.NewOpenCache(1, false, "")
 
 	c.Set("foo", "bar", nil)
 	ok := c.Delete("foo")
@@ -78,7 +79,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestConcurrentAccess(t *testing.T) {
-	c := cache.NewOpenCache(100)
+	c := cache.NewOpenCache(100, false, "")
 	var wg sync.WaitGroup
 
 	setAndGet := func(key string, val int) {
@@ -98,4 +99,26 @@ func TestConcurrentAccess(t *testing.T) {
 	wg.Wait()
 
 	c.Log()
+}
+
+func TestPersistentCache(t *testing.T) {
+	logFile := "test_appendonly.aof"
+	os.Remove(logFile) // clean up previous log
+
+	// 1. Create persistent cache and write some data
+	c := cache.NewOpenCache(10, true, logFile)
+
+	c.Delete("hi")
+	c.Set("user", "evan", nil)
+	ttl := 2 * time.Second
+	c.Set("session", "abc123", &ttl)
+	c.Delete("user")
+	c.Log()
+
+	// 2. Reconstruct from log
+	c2 := cache.NewOpenCache(10, true, logFile)
+	if err := c2.ReplayLog(logFile); err != nil {
+		t.Fatalf("ReplayLog failed: %v", err)
+	}
+	c2.Log()
 }

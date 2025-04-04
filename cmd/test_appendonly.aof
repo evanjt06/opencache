@@ -1,0 +1,3 @@
+{"op":"SET","key":"user","value":"evan"}
+{"op":"SET","key":"session","value":"abc123","ttl_ms":2000}
+{"op":"DELETE","key":"user"}

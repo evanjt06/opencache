@@ -5,6 +5,7 @@ package cache
 import (
 	"container/list"
 	"fmt"
+	"opencache/internal"
 	"sync"
 	"time"
 )
@@ -38,6 +39,11 @@ func (kv *OpenCache) Get(key interface{}) (interface{}, bool) {
 	kv.Mu.Lock()
 	defer kv.Mu.Unlock()
 
+	// validate key first
+	if err := internal.ValidateKey(key); err != nil {
+		return nil, false
+	}
+
 	// update deque ordering
 	if elem, ok := kv.Cache[key]; ok {
 
@@ -55,9 +61,14 @@ func (kv *OpenCache) Get(key interface{}) (interface{}, bool) {
 	return nil, false
 }
 
-func (kv *OpenCache) Set(key interface{}, value interface{}, ttl_duration *time.Duration) {
+func (kv *OpenCache) Set(key interface{}, value interface{}, ttl_duration *time.Duration) bool {
 	kv.Mu.Lock()
 	defer kv.Mu.Unlock()
+
+	// validate key first
+	if err := internal.ValidateKey(key); err != nil {
+		return false
+	}
 
 	if elem, ok := kv.Cache[key]; ok {
 		ent := elem.Value.(*entry)
@@ -69,7 +80,7 @@ func (kv *OpenCache) Set(key interface{}, value interface{}, ttl_duration *time.
 			ent.expiresAt = nil
 		}
 		kv.LRU_deque.MoveToFront(elem)
-		return
+		return true
 	}
 
 	// reached capacity for deque
@@ -97,11 +108,17 @@ func (kv *OpenCache) Set(key interface{}, value interface{}, ttl_duration *time.
 	})
 	kv.Cache[key] = elem
 
+	return true
 }
 
 func (kv *OpenCache) Delete(key interface{}) bool {
 	kv.Mu.Lock()
 	defer kv.Mu.Unlock()
+
+	// validate key first
+	if err := internal.ValidateKey(key); err != nil {
+		return false
+	}
 
 	if elem, ok := kv.Cache[key]; ok {
 		kv.LRU_deque.Remove(elem)

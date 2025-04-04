@@ -1,0 +1,1 @@
+I made this as a basic exercise to make my own cache system like Redis. Opencache is an in-memory key-value (KV) store / cache that implements the Least Recently Used (LRU) eviction algorithm to free up space when the cache's preset capacity is overflowed. I also added a Time to live (TTL) feature for key expiration for cache records.

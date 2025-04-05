@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"opencache/cache"
 	"os"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/evanjt06/opencache/cache"
 )
 
 func TestSetAndGet(t *testing.T) {

@@ -1,4 +1,17 @@
-I made this as a basic exercise to make my own (KV) cache system like Redis. Opencache is an in-memory key-value (KV) store / cache that implements the Least Recently Used (LRU) eviction algorithm to free up space when the cache's preset capacity is overflowed. I also added a Time to live (TTL) feature for key expiration for cache records.
-<br>
-<br>
-all operations for read, update, and delete are O(1) b/c of the double-ended queue and cache ops. validation for the cache keys have also been added so that only comparable elements can be keys. Opencache is also thread-safe because I used mutex, so it is multi-client safe. Added basic persistence with AOF log files.
+# OpenCache
+
+OpenCache is a lightweight, in-memory key-value store implemented in Go. It supports optional TTL-based expiration and persistence using append-only logs.
+
+## Features
+
+- O(1) `Get`, `Set`, `Delete`, and `Update` operations
+- Optional TTL (Time-to-Live) expiration per key
+- Optional persistence via append-only log (AOF)
+- Least Recently Used (LRU) cache algorithm
+
+## API
+- Set(key (must be a comparable type), value interface{}, ttl *time.Duration)
+- Get(key interface{}) (interface{}, bool)
+- Delete(key interface{}) bool
+- ReplayLog(filename string) error
+

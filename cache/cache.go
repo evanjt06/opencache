@@ -7,10 +7,11 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
-	"opencache/internal"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/evanjt06/opencache/internal"
 )
 
 type entry struct {

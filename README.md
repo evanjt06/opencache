@@ -4,9 +4,9 @@ OpenCache is a lightweight, in-memory key-value store implemented in Go. It supp
 
 ## Features
 
-- O(1) `Get`, `Set`, `Delete`, and `Update` operations
+- O(1) `Get`, `Set`, `Delete` operations
 - Optional TTL (Time-to-Live) expiration per key
-- Optional persistence via append-only log (AOF)
+- Optional persistence via append-only log (AOF) file
 - Least Recently Used (LRU) cache algorithm
 
 ## API

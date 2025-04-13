@@ -24,7 +24,7 @@ func TestSetAndGet(t *testing.T) {
 		t.Errorf("Expected 'b' to be 2, got %v", v)
 	}
 
-	c.Log()
+	c.Print()
 }
 
 func TestLRUEviction(t *testing.T) {
@@ -46,7 +46,7 @@ func TestLRUEviction(t *testing.T) {
 	if _, ok := c.Get("c"); !ok {
 		t.Error("Expected 'c' to be present")
 	}
-	c.Log()
+	c.Print()
 }
 
 func TestTTLExpiration(t *testing.T) {
@@ -61,7 +61,7 @@ func TestTTLExpiration(t *testing.T) {
 		t.Error("Expected 'x' to have expired")
 	}
 
-	c.Log()
+	c.Print()
 }
 
 func TestDelete(t *testing.T) {
@@ -76,7 +76,7 @@ func TestDelete(t *testing.T) {
 	if _, ok := c.Get("foo"); ok {
 		t.Error("Expected 'foo' to be deleted")
 	}
-	c.Log()
+	c.Print()
 }
 
 func TestConcurrentAccess(t *testing.T) {
@@ -99,7 +99,7 @@ func TestConcurrentAccess(t *testing.T) {
 
 	wg.Wait()
 
-	c.Log()
+	c.Print()
 }
 
 func TestPersistentCache(t *testing.T) {
@@ -114,12 +114,12 @@ func TestPersistentCache(t *testing.T) {
 	ttl := 2 * time.Second
 	c.Set("session", "abc123", &ttl)
 	c.Delete("user")
-	c.Log()
+	c.Print()
 
 	// 2. Reconstruct from log
 	c2 := cache.NewOpenCache(10, true, logFile)
 	if err := c2.ReplayLog(logFile); err != nil {
 		t.Fatalf("ReplayLog failed: %v", err)
 	}
-	c2.Log()
+	c2.Print()
 }

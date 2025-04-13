@@ -1,0 +1,15 @@
+2025-04-12T22:10:48.201-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:10:48.202-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "b"}
+2025-04-12T22:10:48.202-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:10:48.202-0500	[35mDEBUG[0m	Deleted entry due to capacity	{"key": "b"}
+2025-04-12T22:10:48.202-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "c"}
+2025-04-12T22:11:06.107-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:11:06.108-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "b"}
+2025-04-12T22:11:06.108-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:11:06.108-0500	[35mDEBUG[0m	Deleted entry due to capacity	{"key": "b"}
+2025-04-12T22:11:06.108-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "c"}
+2025-04-12T22:11:11.300-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:11:11.300-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "b"}
+2025-04-12T22:11:11.300-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "a"}
+2025-04-12T22:11:11.300-0500	[35mDEBUG[0m	Deleted entry due to capacity	{"key": "b"}
+2025-04-12T22:11:11.300-0500	[35mDEBUG[0m	Moved entry to front of LRU	{"key": "d"}
